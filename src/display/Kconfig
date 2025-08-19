@@ -1,0 +1,21 @@
+config DISPLAY_MODULE
+	bool "Display Module"
+	select ZBUS
+	select ZBUS_CHANNEL_NAME
+	help
+	  DISPLAY MODULE
+
+if DISPLAY_MODULE
+module = DISPLAY_MODULE
+module-str = Display module
+source "subsys/logging/Kconfig.template.log_config"
+
+config DISPLAY_MODULE_PRIORITY
+	int "Display module thread priority"
+	default 1
+
+config DISPLAY_MODULE_STACK_SIZE
+	int "Display module thread stack size"
+	default 8192
+
+endif

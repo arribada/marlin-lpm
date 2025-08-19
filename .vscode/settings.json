@@ -1,0 +1,18 @@
+{
+    "files.autoSave": "afterDelay",
+
+    "cmake.configureOnOpen": false,
+
+    "nrf-connect.applications": [],
+
+    "clangd.arguments": [
+        "--clang-tidy",
+        "--malloc-trim",
+        "--pch-storage=memory",
+        "--header-insertion=never",
+        "--query-driver=/opt/toolchains/zephyr-sdk-*/arm-zephyr-eabi/bin/arm-zephyr-eabi-g*"
+
+    ],
+    "editor.defaultFormatter": "llvm-vs-code-extensions.vscode-clangd",
+    "terminal.integrated.defaultProfile.linux": "bash",
+}

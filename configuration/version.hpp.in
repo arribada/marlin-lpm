@@ -1,0 +1,15 @@
+#pragma once
+
+#include <string_view>
+
+namespace version {
+
+inline constexpr std::string_view TAG         = "@GIT_TAG@";
+inline constexpr std::string_view BRANCH      = "@GIT_BRANCH@";
+inline constexpr std::string_view GIT_HASH    = "@GIT_HASH@";
+inline constexpr std::string_view GIT_DIRTY_S = "@GIT_DIRTY@";
+inline constexpr int MAJOR = @VERSION_MAJOR@;
+inline constexpr int MINOR = @VERSION_MINOR@;
+inline constexpr int PATCH = @VERSION_PATCH@;
+
+}

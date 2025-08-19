@@ -1,0 +1,18 @@
+&i2c0 {
+	ina219: ina219@41 {
+		compatible = "ti,ina219";
+		reg = <0x41>;
+		lsb-microamp = <100>;
+		shunt-milliohm = <100>;
+		brng = <1>;
+		pg = <3>;
+		badc = <13>;
+		sadc = <13>;
+	};
+};
+
+/ {
+	aliases {
+		battery-sensor = &ina219;
+	};
+};

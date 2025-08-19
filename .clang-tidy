@@ -1,0 +1,37 @@
+---
+Checks: "*,
+        -abseil-*,
+        -altera-*,
+        -android-*,
+        -fuchsia-*,
+        -google-*,
+        -llvm*,
+        -modernize-use-trailing-return-type,
+        -zircon-*,
+        -misc-const-correctness,
+        -readability-static-accessed-through-instance,
+        -readability-avoid-const-params-in-decls,
+        -cppcoreguidelines-non-private-member-variables-in-classes,
+        -misc-non-private-member-variables-in-classes,
+        -hicpp-signed-bitwise,
+        -hicpp-exception-baseclass,
+        -misc-include-cleaner,
+        -hicpp-no-assembler,
+        -cppcoreguidelines-pro-type-vararg,
+        -hicpp-vararg,
+        -misc-use-anonymous-namespace,
+        -cppcoreguidelines-avoid-non-const-global-variables,
+        -misc-use-internal-linkage,
+        -cppcoreguidelines-avoid-do-while,
+        -readability-simplify-boolean-expr,
+        -cppcoreguidelines-pro-type-cstyle-cast,
+        -cppcoreguidelines-pro-type-union-access
+"
+WarningsAsErrors: '*'
+HeaderFilterRegex: ''
+FormatStyle:     none
+UseColor: false
+
+CheckOptions:
+  - key: readability-function-cognitive-complexity.IgnoreMacros
+    value: true

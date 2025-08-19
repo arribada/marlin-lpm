@@ -1,0 +1,10 @@
+/ {
+	fake_rtc: fake_rtc {
+		compatible = "zephyr,fake-rtc";
+		status = "okay";
+	};
+
+	aliases {
+		rtc = &fake_rtc;
+	};
+};

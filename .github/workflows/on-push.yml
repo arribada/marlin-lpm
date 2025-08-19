@@ -1,0 +1,65 @@
+name: On Push
+on: [push]
+
+
+jobs:   
+  Build:
+    runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/arribada/marlin-lpm:latest
+      credentials:
+        username: ${{github.actor}}
+        password: ${{ secrets.GITHUB_TOKEN }}
+    defaults:
+      run:
+        working-directory: /home/user/west-workspace/marlin-lpm
+
+    steps:   
+      - name: Check out repository code
+        uses: actions/checkout@v4
+        with:
+            fetch-depth: 0
+
+      - name: Setup SSH Key
+        uses: webfactory/ssh-agent@v0.9.1
+        with:
+          ssh-private-key: ${{ secrets.SSH_KEY_FOR_ARGOS_SMD_DRIVER_ZEPHYR_REPO }}
+
+      - name: Add GitHub to known_hosts
+        run: |
+          mkdir -p /home/user/.ssh
+          ssh-keyscan github.com >> /home/user/.ssh/known_hosts
+          chmod 600 /home/user/.ssh/known_hosts
+
+      - name: Setup Env
+        run: |
+          mv $GITHUB_WORKSPACE/* /home/user/west-workspace/marlin-lpm
+          mv $GITHUB_WORKSPACE/.[!.]* /home/user/west-workspace/marlin-lpm
+          chmod 777 -R /home/user/west-workspace/marlin-lpm
+          git config --global --add safe.directory "*"
+          git config --global core.sshCommand "ssh -o StrictHostKeyChecking=accept-new"
+          echo "ZEPHYR_SDK_INSTALL_DIR=/opt/toolchains/zephyr-sdk-$ZSDK_VERSION" >> $GITHUB_ENV
+          west update
+
+
+      - name: Build App
+        run: just app_build
+
+      - name: Preare Artifacts
+        run: just prepare_artifacts
+
+      - name: Upload
+        uses: actions/upload-artifact@v4
+        with:
+          name: application
+          path: /home/user/west-workspace/marlin-lpm/artifacts/
+
+      - name: Run Tests
+        run: just test
+
+      - name: Upload
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: twister_out
+          path: /home/user/west-workspace/marlin-lpm/twister-out/

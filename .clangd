@@ -1,0 +1,2 @@
+CompileFlags:                    
+  Remove: [-fno-freestanding, -fno-reorder-functions, -fno-defer-pop, -Wno-volatile, -mfp16-format=ieee]     

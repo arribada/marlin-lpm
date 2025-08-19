@@ -1,0 +1,6 @@
+rsource "core-comms/Kconfig"
+rsource "rtc/Kconfig"
+rsource "supervisor/Kconfig"
+rsource "satcom/Kconfig"
+rsource "display/Kconfig"
+rsource "monitor/Kconfig"

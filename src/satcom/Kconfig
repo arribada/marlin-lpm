@@ -1,0 +1,33 @@
+config SATCOM_MODULE
+	bool "Satcom Module"
+	select SERIAL
+	select UART_INTERRUPT_DRIVEN
+	select ARGOS_SMD
+	select ZBUS
+	select ZBUS_CHANNEL_NAME
+	select RTC_MODULE
+	help
+	  CORE COMMS MODULE
+
+config SATCOM_SCHEDULER_TX_DELAY_MS
+	int "Delay before a scheduled transmission (initial or retry) is sent"
+	range 1 3600000
+	default 60000
+	help
+	  Milliseconds a queued transmission waits before the scheduler fires.
+	  Lowered by tests to avoid minute-long runtimes.
+
+if SATCOM_MODULE
+module = SATCOM_MODULE
+module-str = Satcom module
+source "subsys/logging/Kconfig.template.log_config"
+
+config SATCOM_MODULE_PRIORITY
+	int "Satcom module thread priority"
+	default 1
+
+config SATCOM_MODULE_STACK_SIZE
+	int "Satcom module thread stack size"
+	default 16384
+
+endif

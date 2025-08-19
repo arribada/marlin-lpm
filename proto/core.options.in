@@ -1,0 +1,8 @@
+sat.SysInit.id max_size:64
+sat.SysInit.addr max_size:64
+sat.SysInit.sec_key max_size:64
+sat.SysInit.rconf max_size:64
+sat.SysInit.hostname max_size:64
+sat.SysInit.wifi_network max_size:64
+sat.CoreStatus.tailscale_ip max_size:64
+sat.SatMessage.message max_size:256

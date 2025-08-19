@@ -1,0 +1,6 @@
+add_subdirectory_ifdef(CONFIG_CORE_COMMS_MODULE core-comms)
+add_subdirectory_ifdef(CONFIG_SUPERVISOR_MODULE supervisor)
+add_subdirectory_ifdef(CONFIG_SATCOM_MODULE satcom)
+add_subdirectory_ifdef(CONFIG_DISPLAY_MODULE display)
+add_subdirectory_ifdef(CONFIG_MONITOR_MODULE monitor)
+add_subdirectory_ifdef(CONFIG_RTC_MODULE rtc)

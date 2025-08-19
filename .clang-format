@@ -1,0 +1,12 @@
+BasedOnStyle: Microsoft
+IndentWidth: 4
+AlignConsecutiveAssignments: true
+AlignConsecutiveDeclarations: true
+BreakBeforeBraces: Allman
+AllowShortFunctionsOnASingleLine: None
+AllowAllParametersOfDeclarationOnNextLine: false
+BinPackParameters: false
+BinPackArguments: false 
+AlignAfterOpenBracket: Align
+ContinuationIndentWidth: 4
+ColumnLimit: 90

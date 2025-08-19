@@ -1,0 +1,129 @@
+#include <zephyr/dt-bindings/display/ili9xxx.h>
+#include <zephyr/dt-bindings/mipi_dbi/mipi_dbi.h>
+
+/ {
+    chosen {
+	   	/delete-property/ zephyr,console;
+		/delete-property/ zephyr,shell-uart;
+		/delete-property/ zephyr,uart-mcumgr;
+		/delete-property/ zephyr,bt-mon-uart;
+		/delete-property/ zephyr,bt-c2h-uart;
+		zephyr,display = &display;
+    };
+
+aliases {
+		smd-uart = &uart0;
+		core-uart = &cdc_acm_uart;
+		battery-sensor = &ina219;
+		rtc = &rtc_ds3231;
+		bl = &bl;
+		core-reset = &core_reset;
+	};
+
+	core_reset_drv: core_reset_drv {
+		compatible = "gpio-leds";
+
+		core_reset: core_reset {
+			gpios = <&gpio0 30 GPIO_ACTIVE_LOW>; // A2
+			label = "CoreReset";
+		};
+	};
+};
+
+&i2c0 {
+	ina219: ina219@41 {
+		compatible = "ti,ina219";
+		reg = <0x41>;
+		lsb-microamp = <100>;
+		shunt-milliohm = <100>;
+		brng = <1>;
+		pg = <3>;
+		badc = <13>;
+		sadc = <13>;
+	};
+
+	mfd_ds3231: maxim_ds3231_mfd@68 {
+		compatible = "maxim,ds3231-mfd";
+		reg = <0x68>;
+
+		rtc_ds3231: maxim_ds3231_rtc {
+			compatible = "maxim,ds3231-rtc";
+			isw-gpios = <&gpio0 11 (GPIO_PULL_UP | GPIO_ACTIVE_LOW)>;
+		};
+	};
+
+
+    mipi_dbi {
+        compatible = "zephyr,mipi-dbi-spi";
+        spi-dev = <&spi1>;
+        dc-gpios    = <&gpio0 27  GPIO_ACTIVE_HIGH>;  // DC -> D10
+        reset-gpios = <&gpio0 8 GPIO_ACTIVE_LOW>;   // RST -> D12
+        write-only;
+        #address-cells = <1>;
+        #size-cells = <0>;
+
+        display: ili9341@0 {
+            compatible = "ilitek,ili9341";
+            reg = <0>;
+            mipi-max-frequency = <8000000>;
+            width = <240>;
+            height = <320>;
+            pixel-format = <ILI9XXX_PIXEL_FORMAT_RGB888>;
+            rotation = <90>;
+            
+            pwctrlb = [00 c1 30];
+            pwseqctrl = [64 03 12 81];
+            timctrla = [85 00 79];
+            pwctrla = [39 2c 00 34 02];
+            pumpratioctrl = [20];
+            timctrlb = [00 00];
+            pwctrl1 = [1d];
+            pwctrl2 = [12];
+            vmctrl1 = [33 3f];
+            vmctrl2 = [92];
+            frmctr1 = [00 12];
+            enable3g = [00];
+            gamset = [01];
+            pgamctrl = [0f 22 1c 1b 08 0f 48 b8 34 05 0c 09 0f 07 00];
+            ngamctrl = [00 23 24 07 10 07 38 47 4b 0a 13 06 30 38 0f];
+        };
+    };
+};
+
+&uart0 {
+    status = "okay";
+    current-speed = <9600>;
+	
+    argossmd {
+        compatible = "arribada,argossmd";
+    };
+};
+
+zephyr_udc0: &usbd {
+	compatible = "nordic,nrf-usbd";
+	status = "okay";
+	cdc_acm_uart: cdc_acm_uart0 {
+		compatible = "zephyr,cdc-acm-uart";
+		label = "CDC_ACM";
+	};
+};
+
+&spi0 {
+    status = "disabled";
+};
+
+&spi1 {
+    status = "okay";
+    cs-gpios = <&gpio1 9 GPIO_ACTIVE_LOW>;   /* D13 */
+};
+
+&gpio0 {
+    status = "okay";
+    backlight: backlight {
+        compatible = "gpio-leds";
+        bl: bl {
+            gpios = <&gpio0 6 GPIO_ACTIVE_HIGH>; // BL -> D11
+            label = "Backlight";
+        };
+    };
+};

@@ -1,0 +1,39 @@
+config SUPERVISOR_MODULE
+	bool "Supervisor Module"
+	select ZBUS
+	select ZBUS_CHANNEL_NAME
+	select GPIO
+	select EVENTS
+	help
+	  CORE COMMS MODULE
+
+config CORE_COMMS_CORE_RESET_THRESHOLD
+	int "Consecutive core-comms timeouts before notifying the supervisor to reset the Core"
+	default 1
+
+if SUPERVISOR_MODULE
+module = SUPERVISOR_MODULE
+module-str = supervisor module
+source "subsys/logging/Kconfig.template.log_config"
+
+config SUPERVISOR_MODULE_PRIORITY
+	int "Supervisor module thread priority"
+	default 1
+
+config SUPERVISOR_MODULE_STACK_SIZE
+	int "Supervisor module thread stack size"
+	default 8192
+
+config SUPERVISOR_CORE_RESET_PULSE_MS
+	int "Core reset pulse duration in milliseconds"
+	default 500
+
+config SUPERVISOR_CORE_RESET_POST_PULSE_DELAY_MS
+	int "Delay after releasing the core reset line before re-enabling, in milliseconds"
+	default 30000
+
+config SUPERVISOR_CORE_RESET_RETRY_SECONDS
+	int "Seconds between core reset pulses while in SystemError state"
+	default 180
+
+endif

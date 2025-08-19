@@ -1,0 +1,14 @@
+/ {
+	core_reset_drv: core_reset_drv {
+		compatible = "gpio-leds";
+
+		core_reset: core_reset {
+			gpios = <&gpio0 0 GPIO_ACTIVE_LOW>;
+			label = "CoreReset";
+		};
+	};
+
+	aliases {
+		core-reset = &core_reset;
+	};
+};

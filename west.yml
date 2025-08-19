@@ -1,0 +1,35 @@
+manifest:
+  group-filter: [+optional]
+  remotes:
+    - name: zephyrproject-rtos
+      url-base: https://github.com/zephyrproject-rtos
+    - name: Neargye 
+      url-base: https://github.com/Neargye
+    - name: embedded-template-library 
+      url-base: https://github.com/ETLCPP
+    - name: arribada
+      url-base: git@github.com:arribada
+  projects:
+    - name: zephyr
+      remote: zephyrproject-rtos
+      revision: v4.2.0
+      import:
+        name-allowlist:
+          - cmsis_6    # required by the ARM port
+          - hal_nordic # required for Nordic
+          - segger
+          - lvgl
+          - nanopb
+    - name: magic_enum
+      remote: Neargye
+      revision: v0.9.5
+    - name: etl
+      remote: embedded-template-library 
+      revision: 20.38.10
+    - name: argos-smd-driver-zephyr
+      remote: arribada
+      revision: 55e13b3ec129c5427a04aa7b45322adccca33490
+      groups:
+        - private
+  self:
+    path: marlin-lpm

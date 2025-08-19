@@ -1,0 +1,34 @@
+{
+	"name": "Zephyr",
+	"image": "ghcr.io/arribada/marlin-lpm:latest",
+	"remoteUser": "user",
+	"onCreateCommand": "bash -c 'west update'",
+	"customizations": {
+		"vscodeu": {
+			"extensions": [
+				"twxs.cmake",
+				"llvm-vs-code-extensions.vscode-clangd",
+				"nordic-semiconductor.nrf-kconfig",
+				"nordic-semiconductor.nrf-terminal",
+				"nordic-semiconductor.nrf-devicetree"
+			],
+      "settings": {
+          "terminal.integrated.defaultProfile.linux": "bash",
+          "terminal.integrated.profiles.linux": { "bash": { "path": "/bin/bash" } }
+      }
+		}
+	},
+    "workspaceMount": "source=${localWorkspaceFolder},target=/home/user/west-workspace/marlin-lpm,type=bind", 
+    "workspaceFolder": "/home/user/west-workspace/marlin-lpm",
+    "runArgs": ["--privileged", "-v", "/dev:/dev", "--group-add=27"],
+    "mounts" : [
+        {
+            "source": "${localEnv:SSH_AUTH_SOCK}",
+            "target": "${localEnv:SSH_AUTH_SOCK}",
+            "type": "bind"
+        }
+    ],
+    "remoteEnv": {
+        "SSH_AUTH_SOCK": "${localEnv:SSH_AUTH_SOCK}"
+    }
+}    

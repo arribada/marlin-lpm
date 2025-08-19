@@ -1,0 +1,24 @@
+config CORE_COMMS_MODULE
+	bool "Core Comms Module"
+	select SERIAL
+	select UART_INTERRUPT_DRIVEN
+	select NANOPB
+	select ZBUS
+	select ZBUS_CHANNEL_NAME
+	help
+	  CORE COMMS MODULE
+
+if CORE_COMMS_MODULE
+module = CORE_COMMS_MODULE
+module-str = core comms module
+source "subsys/logging/Kconfig.template.log_config"
+
+config CORE_COMMS_MODULE_PRIORITY
+	int "Core comms module thread priority"
+	default 1
+
+config CORE_COMMS_MODULE_STACK_SIZE
+	int "Core comms module thread stack size"
+	default 8192
+
+endif

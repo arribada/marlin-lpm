@@ -1,0 +1,42 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Target",
+            "cwd": "${workspaceFolder}",
+            "type": "cortex-debug",
+            "request": "launch",
+            "servertype": "jlink",
+            "device": "nrf52",
+            "rtos": "Zephyr",
+            "rttConfig": {
+                "enabled": true,
+                "address": "auto",
+                "decoders": [
+                    {
+                        "label": "",
+                        "port": 0,
+                        "type": "console"
+                    }
+                ]
+            },
+            "interface": "swd",
+            "runToEntryPoint": "main",
+            "executable": "${workspaceFolder}/build/zephyr/zephyr.elf",
+            "gdbPath": "/opt/toolchains/zephyr-sdk-0.17.4/arm-zephyr-eabi/bin/arm-zephyr-eabi-gdb"
+        },
+        {
+            "name": "Host",
+            "cwd": "${fileDirname}",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${fileDirname}/build/zephyr/zephyr.exe",
+            "stopAtEntry": false,
+            "launchCompleteCommand": "exec-run",
+            "linux": {
+                "MIMode": "gdb",
+                "miDebuggerPath": "/usr/bin/gdb"
+            }
+        },
+    ]
+}

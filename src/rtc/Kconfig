@@ -1,0 +1,16 @@
+config RTC_MODULE
+	bool "RTC Module"
+	select RTC
+	select I2C
+	select ZBUS
+	select ZBUS_CHANNEL_NAME
+	help
+	  RTC MODULE
+
+if RTC_MODULE
+
+module = RTC_MODULE
+module-str = RTC module
+source "subsys/logging/Kconfig.template.log_config"
+
+endif

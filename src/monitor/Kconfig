@@ -1,0 +1,32 @@
+config MONITOR_MODULE
+	bool "Monitor Module"
+	select GPIO
+	select ADC
+	select SENSOR
+	select ZBUS
+	select ZBUS_CHANNEL_NAME
+	help
+	  MONITOR MODULE
+
+if MONITOR_MODULE
+
+config MONITOR_USE_FAKE_BATTERY
+	bool "Use simulated battery data (for testing)"
+	default n
+	help
+	  When enabled, the monitor module uses fake simulated battery data
+	  instead of reading from the INA219 sensor hardware.
+
+module = MONITOR_MODULE
+module-str = Monitor module
+source "subsys/logging/Kconfig.template.log_config"
+
+config MONITOR_MODULE_PRIORITY
+	int "Monitor module thread priority"
+	default 1
+
+config MONITOR_MODULE_STACK_SIZE
+	int "Monitor module thread stack size"
+	default 8192
+
+endif
